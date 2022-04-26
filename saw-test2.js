@@ -9,6 +9,7 @@ alternatifkriteria = [
     [4000000, 70, 8,  50, 1500, 60],
     [3000000, 90, 10, 90, 4000, 70],
 ]
+console.log("ALTERNATIF TESTING"+alternatifkriteria);
 
 console.log('Alternatif');console.log(alternatif);
 console.log('Kriteria');console.log(kriteria);

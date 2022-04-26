@@ -5,6 +5,7 @@ app.use(express.json())
 const db = require("./db").DB
 
 const functions = require("./funtion")
+const sawfunction = require("./calculate_saw")
 
 //GENERATE API LIST WHEY
 app.get('/listwhey', (req, res) => {
@@ -105,7 +106,7 @@ app.delete('/deletewhey', (req, res) => {
 app.get('/getcalculatewhey', (req, res) => {
 
     let parameter = req.query.search
-   
+
     functions.getCalculateWhey(parameter,function(err, results) {
         try{
             if (err)
@@ -119,27 +120,51 @@ app.get('/getcalculatewhey', (req, res) => {
                 "error_message" : error
             })
         }
-    });
-})
+    });  
+}) 
 
 app.put('/update_calculate_whey', (req, res) => {
 
-    let body = req.body
+    let data 
     
-    functions.putWheyProtein(body,function(err, results) {
+    functions.getCalculateWhey("", async function(err, results) {
         try{
             if (err)
-                throw err; // or return an error message, or something
+                throw err; 
             else
-            res.send({"data" : "Success"}); 
+                console.log(results.length)
+                let calculate_saw =  sawfunction.calculateSaw(results);
+                for (let i = 0 ; i < results.length ; i++) {
+                    await functions.update_calculate_whey(calculate_saw[i] , results[i].id_whey_protein)
+                }
+                res.send(calculate_saw);
         }catch(error) {
             res.send({
                 "error_key" : "error_internal_server",
                 "error_message" : error
             })
         }
+    });  
+   
+    console.log(data);
+
+    // sawfunction.calculateSaw(data, function(err, results) {
+    //     try{
+    //         if (err)
+    //             throw err; // or return an error message, or something
+    //         else
+    //         res.send({"data" : "Success"}); 
+    //     }catch(error) {
+    //         res.send({
+    //             "error_key" : "error_internal_server",
+    //             "error_message" : error
+    //         })
+    //     }
         
-    });
+    // });
+
+    // let calculate_saw =  sawfunction.calculateSaw(data);
+    // res.send(calculate_saw);
 })
 
 

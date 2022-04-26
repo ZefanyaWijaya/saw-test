@@ -1,5 +1,6 @@
 
 const db = require("./db").DB
+const util = require('util');
 
 //FUNCTION LIST WHEY
 
@@ -303,14 +304,10 @@ function getCalculateWhey(parameter, callback){
             tambahan += " WHERE whey_protein_name LIKE '%"+parameter+"%' " 
             // + connection.escape('%'+parameter.search+'%')
         } 
-        // else {
-        //     tambahan += ""
-            
-        // }
 
-        connection.query("select * from calculate_whey"+tambahan, parameter, function (err, rows) {
+        connection.query("select * from calculate_whey JOIN whey_protein ON calculate_whey.id_whey_protein = whey_protein.id_whey_protein"+tambahan, function (err, rows) {
             if (!err) {
-                console.log(rows);
+                // console.log(rows);
                 connection.release()
                 callback(null,rows)
             }
@@ -330,6 +327,22 @@ function getCalculateWhey(parameter, callback){
     });
 }
 
+    function update_calculate_whey (score , id) {
+    db.getConnection( async function (err, connection) {
+        if (err) {
+            connection.release();
+            throw err;
+        }
+
+        const query = util.promisify(connection.query).bind(connection);
+
+        const row = await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id]);
+    
+    })
+}
+
+
+
 
 exports.getWheyProtein = getWheyProtein
 exports.postWheyProtein = postWheyProtein
@@ -337,3 +350,4 @@ exports.putWheyProtein = putWheyProtein
 exports.deleteWheyProtein = deleteWheyProtein
 
 exports.getCalculateWhey = getCalculateWhey
+exports.update_calculate_whey = update_calculate_whey
