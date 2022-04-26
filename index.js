@@ -73,7 +73,6 @@ app.put('/updatewhey', (req, res) => {
         }
         
     });
-
 })
 
 app.delete('/deletewhey', (req, res) => {
@@ -122,6 +121,33 @@ app.get('/getcalculatewhey', (req, res) => {
         }
     });
 })
+
+app.put('/update_calculate_whey', (req, res) => {
+
+    let body = req.body
+    
+    functions.putWheyProtein(body,function(err, results) {
+        try{
+            if (err)
+                throw err; // or return an error message, or something
+            else
+            res.send({"data" : "Success"}); 
+        }catch(error) {
+            res.send({
+                "error_key" : "error_internal_server",
+                "error_message" : error
+            })
+        }
+        
+    });
+})
+
+
+// GENERATE API RANKING WHEY
+
+
+
+
 
 
 
