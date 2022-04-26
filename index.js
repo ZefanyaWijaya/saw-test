@@ -103,6 +103,26 @@ app.delete('/deletewhey', (req, res) => {
 
 //GENERATE API CALCULATE WHEY
 
+app.get('/getcalculatewhey', (req, res) => {
+
+    let parameter = req.query.search
+   
+    functions.getCalculateWhey(parameter,function(err, results) {
+        try{
+            if (err)
+                throw err; // or return an error message, or something
+            else
+                console.log(results.length)
+                res.send({"data" : results}); 
+        }catch(error) {
+            res.send({
+                "error_key" : "error_internal_server",
+                "error_message" : error
+            })
+        }
+    });
+})
+
 
 
 app.listen(3000, () => console.log(`Example app listening at http://localhost:3000`))

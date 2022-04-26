@@ -1,6 +1,7 @@
 
 const db = require("./db").DB
 
+//FUNCTION LIST WHEY
 
 function getWheyProtein(parameter , callback){
     db.getConnection(function (err, connection) {
@@ -287,8 +288,52 @@ function deleteWheyProtein (id , callback){
     });
 }
 
+//CALCULATE WHEY
+
+function getCalculateWhey(parameter, callback){
+    db.getConnection(function (err, connection) {
+        if (err) {
+            connection.release();
+            throw err;
+        }
+    
+        var tambahan = ''
+        
+        if(parameter != null) {
+            tambahan += " WHERE whey_protein_name LIKE '%"+parameter+"%' " 
+            // + connection.escape('%'+parameter.search+'%')
+        } 
+        // else {
+        //     tambahan += ""
+            
+        // }
+
+        connection.query("select * from calculate_whey"+tambahan, parameter, function (err, rows) {
+            if (!err) {
+                console.log(rows);
+                connection.release()
+                callback(null,rows)
+            }
+            else {
+                console.log("error");
+                connection.release()
+                callback(err,null)
+            }
+
+        });
+
+        connection.on('error', function (err) {
+            connection.release();
+            callback(err,null)
+            throw err;
+        });
+    });
+}
+
 
 exports.getWheyProtein = getWheyProtein
 exports.postWheyProtein = postWheyProtein
 exports.putWheyProtein = putWheyProtein
 exports.deleteWheyProtein = deleteWheyProtein
+
+exports.getCalculateWhey = getCalculateWhey
