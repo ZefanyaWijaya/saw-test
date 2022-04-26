@@ -4,7 +4,7 @@ app.use(express.json())
 
 const db = require("./db").DB
 
-const functions = require("./funtion")
+const functions = require("./function")
 const sawfunction = require("./calculate_saw")
 
 //GENERATE API LIST WHEY
