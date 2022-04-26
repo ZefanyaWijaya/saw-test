@@ -22,7 +22,7 @@ function calculateSaw (data) {
     
     let kriteria = ["Harga" , "Protein", "Calories", "Kandungan Lain", "Rasa"];
     let costbenefit = ["cost" , "benefit", "cost", "benefit", "benefit"];
-    let kepentingan = [0.2 , 0.3 , 0.2 , 0.18, 0.12];
+    let kepentingan = [0.2 , 0.3 , 0.3 , 0.15, 0.05];
     
     pembagi = [];
 

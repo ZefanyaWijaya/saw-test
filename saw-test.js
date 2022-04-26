@@ -1,12 +1,21 @@
-        alternatif = ["Produk A" , "Produk B", "Produk C", "Produk D"];
-        kriteria = ["Harga" , "Kualitas", "Fitur", "Garansi"];
-        costbenefit = ["cost", 'benefit', 'benefit', 'benefit'];
-        kepentingan = [0.3, 0.35, 0.2, 0.15];
+        alternatif = 
+                    [  "Optimum N Gold Standard" , 
+                        "Optimum Platinum", 
+                        "EVOWHEY PROTEIN 1750 gr", 
+                        "EVOLENE ISOLENE 1650 gr",
+                        "L-Men Daily Whey Protein 250 gr",
+                        "BSN Syntha 6 (5 lbs)"
+                    ];
+        kriteria = ["Harga" , "Protein", "Calories", "Kandungan Lain", "Rasa"];
+        costbenefit = ["cost" , "benefit", "cost", "benefit", "benefit"];
+        kepentingan = [0.2 , 0.3 , 0.3 , 0.15, 0.05];
         alternatifkriteria = [
-            [3500, 70, 10, 36],
-            [4500, 90, 10, 48],
-            [4000, 80, 9, 48],
-            [4000, 70, 8, 60]
+            [13874, 24, 120, 3, 20],
+            [31225, 30, 140, 4, 2],
+            [13600, 25, 125, 4, 3],
+            [16400, 27, 140, 4, 1],
+            [9233, 12, 150, 14, 2],
+            [17083, 22, 200, 5, 6]
         ]
 
         console.log('Alternatif');console.log(alternatif);
