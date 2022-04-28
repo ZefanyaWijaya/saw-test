@@ -148,27 +148,37 @@ app.put('/update_calculate_whey', (req, res) => {
    
     console.log(data);
 
-    // sawfunction.calculateSaw(data, function(err, results) {
-    //     try{
-    //         if (err)
-    //             throw err; // or return an error message, or something
-    //         else
-    //         res.send({"data" : "Success"}); 
-    //     }catch(error) {
-    //         res.send({
-    //             "error_key" : "error_internal_server",
-    //             "error_message" : error
-    //         })
-    //     }
-        
-    // });
-
-    // let calculate_saw =  sawfunction.calculateSaw(data);
-    // res.send(calculate_saw);
 })
 
 
 // GENERATE API RANKING WHEY
+
+app.get('/rankingwhey', (req, res) => {
+
+
+    let parameter = {
+        "harga" : req.query.harga,
+        'protein' : req.query.protein,
+        "calories" : req.query.calories,
+        "variants" : req.query.variants,
+        "others" : req.query.others,
+    }
+    functions.getRankingWheyProtein(parameter,function(err, results) {
+        try{
+            if (err)
+                throw err; // or return an error message, or something
+            else
+                console.log(results.length)
+                res.send({"data" : results}); 
+        }catch(error) {
+            res.send({
+                "error_key" : "error_internal_server",
+                "error_message" : error
+            })
+        }
+       
+    });
+})
 
 
 

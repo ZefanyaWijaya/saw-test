@@ -205,6 +205,22 @@ function postWheyProtein (parameter , callback){
         
                     if (!err) {
                         console.log(rows);
+                        // connection.release()
+                        // callback(null,rows)
+                        
+                    }
+                    else {
+                        console.log("error");
+                        connection.release()
+                        callback(err,null)
+                    }
+        
+                });
+                connection.query(`INSERT INTO ranking_whey(id_whey_protein ,ranking_whey) 
+                VALUES (`+id_whey_protein+`,`+parameter.other_ingredients+` , 0) `, params, function (err, rows) {
+        
+                    if (!err) {
+                        console.log(rows);
                         connection.release()
                         callback(null,rows)
                         
@@ -367,7 +383,9 @@ function getCalculateWhey(parameter, callback){
     });
 }
 
-    function update_calculate_whey (score , id) {
+
+//UPDATE CALCULATE WHEY
+function update_calculate_whey (score , id) {
     db.getConnection( async function (err, connection) {
         if (err) {
             connection.release();
@@ -382,6 +400,196 @@ function getCalculateWhey(parameter, callback){
 }
 
 
+//RANKING WHEY
+
+//GET RANKING WHEY
+
+function getRankingWheyProtein(parameter , callback){
+    db.getConnection(function (err, connection) {
+        if (err) {
+            connection.release();
+            throw err;
+        }
+
+        var tambahan =""
+
+        var params = [];
+
+
+        if (parameter.harga == "a")
+        {
+            tambahan += " where w.price_per_serving between ? and ?"
+            params.push(0)
+            params.push(5000)
+        } else if (parameter.harga == "b") {
+            tambahan += " where w.price_per_serving between ? and ?"
+            params.push(5001)
+            params.push(10000) 
+        } else if (parameter.harga == "c") {
+            tambahan += " where w.price_per_serving between ? and ?"
+            params.push(10001)
+            params.push(15000)
+        } else if (parameter.harga == "d") {
+            tambahan += " where w.price_per_serving between ? and ?"
+            params.push(15001)
+            params.push(20000)
+        } else if (parameter.harga == "e") {
+            tambahan += " where w.price_per_serving between ? and ?"
+            params.push(20001)
+            params.push(25000)
+        } else if (parameter.harga == "f") {
+            tambahan += " where w.price_per_serving between ? and ?"
+            params.push(25001)
+            params.push(30000)
+        } else if (parameter.harga == "g") {
+            tambahan += " where w.price_per_serving > ?"
+            params.push(30000)
+        } else {
+            tambahan += " where w.price_per_serving >= ?"
+            params.push(0)
+        }
+
+        if (parameter.protein == "a") {
+            tambahan += " AND w.protein_per_serving between ? and ?"
+            params.push(0)
+            params.push(5)
+        } else if (parameter.protein == "b") {
+            tambahan += " AND w.protein_per_serving between ? and ?"
+            params.push(6)
+            params.push(10)
+        } else if (parameter.protein == "c") {
+            tambahan += " AND w.protein_per_serving between ? and ?"
+            params.push(11)
+            params.push(15)
+        } else if (parameter.protein == "d") {
+            tambahan += " AND w.protein_per_serving between ? and ?"
+            params.push(16)
+            params.push(20)
+        } else if (parameter.protein == "e") {
+            tambahan += " AND w.protein_per_serving between ? and ?"
+            params.push(21)
+            params.push(25)
+        } else if (parameter.protein == "f") {
+            tambahan += " AND w.protein_per_serving between ? and ?"
+            params.push(26)
+            params.push(30)
+        } else if (parameter.protein == "g") {
+            tambahan += " AND w.protein_per_serving > ?"
+            params.push(30)
+        } else {
+            tambahan += " AND w.protein_per_serving >= ?"
+            params.push(0)
+        }
+
+        if(parameter.calories == "a") {
+            tambahan += " AND w.calories_per_serving between ? and ?"
+            params.push(0)
+            params.push(100)
+        } else if (parameter.calories == "b") {
+            tambahan += " AND w.calories_per_serving between ? and ?"
+            params.push(101)
+            params.push(125)
+        } else if (parameter.calories == "c") {
+            tambahan += " AND w.calories_per_serving between ? and ?"
+            params.push(126)
+            params.push(150)
+        } else if (parameter.calories == "d") {
+            tambahan += " AND w.calories_per_serving between ? and ?"
+            params.push(151)
+            params.push(175)
+        } else if (parameter.calories == "e") {
+            tambahan += " AND w.calories_per_serving between ? and ?"
+            params.push(176)
+            params.push(200)
+        } else if (parameter.calories == "f") {
+            tambahan += " AND w.calories_per_serving between ? and ?"
+            params.push(201)
+            params.push(225)
+        } else if (parameter.calories == "g") {
+            tambahan += " AND w.calories_per_serving between ? and ?"
+            params.push(226)
+            params.push(250)
+        } else if (parameter.calories == "h") {
+            tambahan += " AND w.calories_per_serving > ?"
+            params.push(250)
+        } else {
+            tambahan += " AND w.calories_per_serving >= ?"
+            params.push(0)
+        }
+
+        if(parameter.variants == "a") {
+            tambahan += " AND w.available_variant_product = ?"
+            params.push(1)
+        } else if(parameter.variants == "b") {
+            tambahan += " AND w.available_variant_product = ?"
+            params.push(2)
+        } else if(parameter.variants == "c") {
+            tambahan += " AND w.available_variant_product = ?"
+            params.push(3)
+        } else if(parameter.variants == "d") {
+            tambahan += " AND w.available_variant_product = ?"
+            params.push(4)
+        } else if(parameter.variants == "e") {
+            tambahan += " AND w.available_variant_product = ?"
+            params.push(5)
+        } else if(parameter.variants == "f") {
+            tambahan += " AND w.available_variant_product > ?"
+            params.push(5)
+        } else {
+            tambahan += " AND w.available_variant_product >= ?"
+            params.push(0)
+        }
+
+        if(parameter.others == "a") {
+            tambahan += " AND c.other_ingredients = ?"
+            params.push(1)
+        } else if (parameter.others == "b") {
+            tambahan += " AND c.other_ingredients = ?"
+            params.push(2)
+        } else if (parameter.others == "c") {
+            tambahan += " AND c.other_ingredients = ?"
+            params.push(3)
+        } else if (parameter.others == "d") {
+            tambahan += " AND c.other_ingredients = ?"
+            params.push(4)
+        } else if (parameter.others == "e") {
+            tambahan += " AND c.other_ingredients = ?"
+            params.push(5)
+        } else if (parameter.others == "f") {
+            tambahan += " AND c.other_ingredients > ?"
+            params.push(5)
+        } else {
+            tambahan += " AND c.other_ingredients >= ?"
+            params.push(0)
+        }
+        
+        
+        
+        connection.query("select * from calculate_whey c JOIN whey_protein w ON c.id_whey_protein = w.id_whey_protein"+tambahan+ " ORDER BY score_saw DESC", params, function (err, rows) {
+            // connection.release();
+            if (!err) {
+                console.log(rows);
+                connection.release()
+                callback(null,rows)
+                
+            }
+            else {
+                console.log("error");
+                connection.release()
+                callback(err,null)
+            }
+
+        });
+
+        connection.on('error', function (err) {
+            connection.release();
+            callback(err,null)
+            throw err;
+        });
+    });
+}
+
+
 
 
 exports.getWheyProtein = getWheyProtein
@@ -391,3 +599,5 @@ exports.deleteWheyProtein = deleteWheyProtein
 
 exports.getCalculateWhey = getCalculateWhey
 exports.update_calculate_whey = update_calculate_whey
+
+exports.getRankingWheyProtein = getRankingWheyProtein
