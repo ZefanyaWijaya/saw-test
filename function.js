@@ -10,6 +10,7 @@ function getWheyProtein(parameter , callback){
             connection.release();
             throw err;
         }
+
         var tambahan =""
 
         var params = [];
@@ -183,17 +184,38 @@ function postWheyProtein (parameter , callback){
             parameter.price_per_serving,
             parameter.protein_per_serving,
             parameter.calories_per_serving,
-            parameter.available_variants
+            parameter.available_variants,
         ]
 
+        let id_whey_protein = 0;
+        
+
         connection.query(`INSERT INTO whey_protein(whey_protein_name ,price_per_serving ,protein_per_serving ,
-            calories_per_serving , available_variant_product  , more_detail_link ) 
-            VALUES ('`+parameter.whey_protein_name+`', ?, ?, ?, ?, '`+parameter.details+`') `, params, function (err, rows) {
+            calories_per_serving , available_variant_product  , more_detail_link) 
+            VALUES ('`+parameter.whey_protein_name+`', ?, ?, ?, ?, '`+parameter.details+`')`, params, function (err, rows) {
             
+                
             if (!err) {
                 console.log(rows);
-                connection.release()
-                callback(null,rows)
+                id_whey_protein = rows.insertId
+                // connection.release()
+                // callback(null,rows)
+                connection.query(`INSERT INTO calculate_whey(id_whey_protein ,other_ingredients ,score_saw) 
+                VALUES (`+id_whey_protein+`,`+parameter.other_ingredients+` , 0) `, params, function (err, rows) {
+        
+                    if (!err) {
+                        console.log(rows);
+                        connection.release()
+                        callback(null,rows)
+                        
+                    }
+                    else {
+                        console.log("error");
+                        connection.release()
+                        callback(err,null)
+                    }
+        
+                });
                 
             }
             else {
@@ -203,6 +225,8 @@ function postWheyProtein (parameter , callback){
             }
 
         });
+
+       
 
         connection.on('error', function (err) {
             connection.release();
@@ -240,7 +264,6 @@ function putWheyProtein (parameter , callback){
                 console.log(rows);
                 connection.release()
                 callback(null,rows)
-                
             }
             else {
                 console.log("error");
@@ -266,6 +289,21 @@ function deleteWheyProtein (id , callback){
         }
 
         params = []
+        
+        
+        connection.query(`DELETE FROM calculate_whey WHERE id_whey_protein = ?`, id, function (err, rows) {
+            if (!err) {
+                console.log(rows.affectedRows);
+                // connection.release()
+                // callback(null,rows.affectedRows)
+                
+            }
+            else {
+                console.log("error");
+                connection.release()
+                callback(err,null)
+            }
+        });
 
         connection.query(`DELETE FROM whey_protein WHERE id_whey_protein = ?`, id, function (err, rows) {
             if (!err) {
@@ -303,9 +341,11 @@ function getCalculateWhey(parameter, callback){
         if(parameter != null) {
             tambahan += " WHERE whey_protein_name LIKE '%"+parameter+"%' " 
             // + connection.escape('%'+parameter.search+'%')
-        } 
+        }else {
+            tambahan += "" 
+        }
 
-        connection.query("select * from calculate_whey JOIN whey_protein ON calculate_whey.id_whey_protein = whey_protein.id_whey_protein"+tambahan, function (err, rows) {
+        connection.query("select * from calculate_whey JOIN whey_protein ON calculate_whey.id_whey_protein = whey_protein.id_whey_protein"+tambahan+ " ORDER BY score_saw DESC" , function (err, rows) {
             if (!err) {
                 // console.log(rows);
                 connection.release()
