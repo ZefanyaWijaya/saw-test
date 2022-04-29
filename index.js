@@ -24,9 +24,14 @@ app.get('/listwhey', (req, res) => {
                 throw err; // or return an error message, or something
             else
                 console.log(results.length)
-                res.send({"data" : results}); 
+                res.send({
+                    "message" : "Success",
+                    "data" : results
+                }); 
+                
         }catch(error) {
             res.send({
+                "message" : "Failed",
                 "error_key" : "error_internal_server",
                 "error_message" : error
             })
