@@ -361,7 +361,7 @@ function getCalculateWhey(parameter, callback){
             tambahan += "" 
         }
 
-        connection.query("select * from calculate_whey JOIN whey_protein ON calculate_whey.id_whey_protein = whey_protein.id_whey_protein"+tambahan+ " ORDER BY score_saw DESC" , function (err, rows) {
+        connection.query("select * from calculate_whey JOIN whey_protein ON calculate_whey.id_whey_protein = whey_protein.id_whey_protein"+tambahan+"" , function (err, rows) {
             if (!err) {
                 // console.log(rows);
                 connection.release()
