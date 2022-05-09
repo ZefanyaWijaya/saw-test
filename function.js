@@ -415,7 +415,6 @@ function getRankingWheyProtein(parameter , callback){
 
         var params = [];
 
-
         if (parameter.harga == "a")
         {
             tambahan += " where w.price_per_serving between ? and ?"
