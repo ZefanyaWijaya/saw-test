@@ -51,9 +51,13 @@ app.post('/addwhey', (req, res) => {
             if (err)
                 throw err; // or return an error message, or something
             else
-            res.send({"data" : "Success"}); 
+            res.send({
+                "message" : "Success",
+                "data" : "Success"
+            }); 
         }catch(error) {
             res.send({
+                "message" : "Failed",
                 "error_key" : "error_internal_server",
                 "error_message" : error
             })
