@@ -149,7 +149,7 @@ function getWheyProtein(parameter , callback){
             
         // }
 
-        connection.query("select * from whey_protein"+tambahan, params, function (err, rows) {
+        connection.query("select wp.*, cw.other_ingredients from whey_protein wp JOIN calculate_whey cw ON wp.id_whey_protein = cw.id_whey_protein"+tambahan, params, function (err, rows) {
             // connection.release();
             if (!err) {
                 console.log(rows);
