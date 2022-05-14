@@ -264,7 +264,8 @@ function putWheyProtein (parameter , callback){
             parameter.protein_per_serving,
             parameter.calories_per_serving,
             parameter.available_variants,
-            parameter.id_whey_protein
+            parameter.id_whey_protein,
+            parameter.other_ingredients
         ]
 
         connection.query(`UPDATE whey_protein SET whey_protein_name = '`+parameter.whey_protein_name+`',
@@ -278,8 +279,22 @@ function putWheyProtein (parameter , callback){
             
             if (!err) {
                 console.log(rows);
-                connection.release()
-                callback(null,rows)
+                // connection.release()
+                // callback(null,rows)
+                connection.query(`UPDATE calculate_whey SET other_ingredients = `+parameter.other_ingredients+`
+                    WHERE id_whey_protein =  `+parameter.id_whey_protein+``, params, function (err, rows) {
+                    
+                    if (!err) {
+                        console.log(rows);
+                        connection.release()
+                        callback(null,rows)
+                    }
+                    else {
+                        console.log("error");
+                        connection.release()
+                        callback(err,null)
+                    }
+                });
             }
             else {
                 console.log("error");
