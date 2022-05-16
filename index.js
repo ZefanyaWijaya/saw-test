@@ -93,7 +93,8 @@ app.put('/updatewhey', (req, res) => {
 
 app.delete('/deletewhey', (req, res) => {
 
-    let id = req.body.id_whey_protein 
+    // let id = req.body.id_whey_protein 
+    let id = req.query.id
     
     functions.deleteWheyProtein(id,function(err, results) {
         try{
