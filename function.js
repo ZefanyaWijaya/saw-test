@@ -205,22 +205,6 @@ function postWheyProtein (parameter , callback){
         
                     if (!err) {
                         console.log(rows);
-                        // connection.release()
-                        // callback(null,rows)
-                        
-                    }
-                    else {
-                        console.log("error");
-                        connection.release()
-                        callback(err,null)
-                    }
-        
-                });
-                connection.query(`INSERT INTO ranking_whey(id_whey_protein ,ranking_whey) 
-                VALUES (`+id_whey_protein+`,`+parameter.other_ingredients+` , 0) `, params, function (err, rows) {
-        
-                    if (!err) {
-                        console.log(rows);
                         connection.release()
                         callback(null,rows)
                         
@@ -232,7 +216,6 @@ function postWheyProtein (parameter , callback){
                     }
         
                 });
-                
             }
             else {
                 console.log("error");

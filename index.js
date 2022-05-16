@@ -56,11 +56,14 @@ app.post('/addwhey', (req, res) => {
                 "data" : "Success"
             }); 
         }catch(error) {
+            console.log(error);
             res.send({
                 "message" : "Failed",
                 "error_key" : "error_internal_server",
                 "error_message" : error
+                
             })
+        
         }
         
     });
