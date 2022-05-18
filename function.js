@@ -393,6 +393,10 @@ function update_calculate_whey (score , id) {
         const query = util.promisify(connection.query).bind(connection);
 
         const row = await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id]);
+
+        connection.release();
+
+        return 
     
     })
 }

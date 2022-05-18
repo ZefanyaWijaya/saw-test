@@ -1,6 +1,6 @@
 
 
-function calculateSaw (data) {
+async function calculateSaw (data) {
 
     let alternatif = []
     let alternatifkriteria = []

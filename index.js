@@ -11,8 +11,6 @@ const sawfunction = require("./calculate_saw")
 
 //GENERATE API LIST WHEY
 app.get('/listwhey', (req, res) => {
-
-
     let parameter = {
         "harga" : req.query.harga,
         'protein' : req.query.protein,
@@ -90,7 +88,6 @@ app.put('/updatewhey', (req, res) => {
                 "error_message" : error
             })
         }
-        
     });
 })
 
@@ -154,31 +151,30 @@ app.put('/update_calculate_whey', (req, res) => {
 
     let data 
     
-    functions.getCalculateWhey("", async function(err, results) {
-        try{
+    functions.getCalculateWhey("", async function (err, results) {
+        try {
             if (err)
-                throw err; 
-            else
+                throw err
+            else {
                 console.log(results.length)
-                let calculate_saw =  sawfunction.calculateSaw(results);
-                for (let i = 0 ; i < results.length ; i++) {
-                    await functions.update_calculate_whey(calculate_saw[i] , results[i].id_whey_protein)
+                let calculate_saw = await sawfunction.calculateSaw(results)
+                for (let i = 0; i < results.length; i++) {
+                    await functions.update_calculate_whey(calculate_saw[i], results[i].id_whey_protein)
                 }
                 res.send({
-                    "message" : "Success",
+                    "message": "Success",
                     // calculate_saw
-                });
-        }catch(error) {
+                })
+            }
+        } catch (error) {
             res.send({
-                "message" : "Failed",
-                "error_key" : "error_internal_server",
-                "error_message" : error
+                "message": "Failed",
+                "error_key": "error_internal_server",
+                "error_message": error
             })
         }
     });  
-   
     console.log(data);
-
 })
 
 
