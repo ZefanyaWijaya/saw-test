@@ -1,9 +1,9 @@
 var mysql = require('mysql');
 
 var con = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "password",
+  host: "dbwisp.c5zujjjdmbwx.us-west-2.rds.amazonaws.com",
+  user: "jleopold8",
+  password: "m45t3r88",
   port : 3306, 
   database : "spk_saw_whey_protein" 
   
