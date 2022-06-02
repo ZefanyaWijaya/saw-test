@@ -5,7 +5,8 @@ var con = mysql.createPool({
   user: "jleopold8",
   password: "m45t3r88",
   port : 3306, 
-  database : "spk_saw_whey_protein" 
+  database : "spk_saw_whey_protein",
+  connectionLimit: 10 
   
 });
 
