@@ -387,7 +387,7 @@ async function update_calculate_whey (score , id) {
 
     // try {
         
-    //     const err, results = await new Promise((resolve, reject) => db.query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id])
+    //     const rows = await db.query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id])
 
     //     return rows 
         
@@ -403,27 +403,11 @@ async function update_calculate_whey (score , id) {
             throw err;
         }
 
-        // const query = util.promisify(connection.query).bind(connection);
+        const query = util.promisify(connection.query).bind(connection);
 
-        // const row = await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id]);
+        const row = await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id]);
 
-        // connection.release();
-
-        connection.query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id], function (err, rows) {
-            // connection.release();
-            if (!err) {
-                console.log(rows);
-                connection.release()
-                callback(null,rows)
-                
-            }
-            else {
-                console.log("error");
-                connection.release()
-                callback(err,null)
-            }
-
-        });
+        connection.release();
 
         return 
     
