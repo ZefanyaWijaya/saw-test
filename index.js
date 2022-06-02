@@ -159,13 +159,13 @@ app.put('/update_calculate_whey', (req, res) => {
                 for (let i = 0; i < results.length; i++) {
                     await functions.update_calculate_whey(calculate_saw[i], results[i].id_whey_protein)
                 }
-                return res.send({
+                res.send({
                     "message": "Success",
                     // calculate_saw
                 })
             }
         } catch (error) {
-            return res.send({
+            res.send({
                 "message": "Failed",
                 "error_key": "error_internal_server",
                 "error_message": error
