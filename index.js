@@ -162,10 +162,7 @@ app.put('/update_calculate_whey', (req, res) => {
                         try{
                             if (err)
                                 throw err; // or return an error message, or something
-                            else
-                            // res.send({
-                            //     "message" : "Success",
-                            // }); 
+                
                         }catch(error) {
                             res.send({
                                 "message" : "Failed",
