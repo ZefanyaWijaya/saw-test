@@ -414,13 +414,13 @@ async function update_calculate_whey (query , parameter) {
             if (!err) {
                 console.log(rows);
                 connection.release()
-                callback(null,rows)
+                return null
                 
             }
             else {
                 console.log("error");
                 connection.release()
-                callback(err,null)
+                return err
             }
 
         });
