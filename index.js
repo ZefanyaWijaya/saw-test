@@ -175,6 +175,8 @@ app.put('/update_calculate_whey', (req, res) => {
                 }
                 return res.send({
                     "message": "Success",
+                    "query" : query,
+                    "parameter": parameter
                     // calculate_saw
                 })
             }
