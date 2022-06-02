@@ -413,7 +413,7 @@ function update_calculate_whey (score , id) {
                     });
                   }
                   console.log('Transaction Complete.');
-                  connection.end();
+                  connection.release();
                 });
             });
         });
