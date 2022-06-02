@@ -406,16 +406,15 @@ function update_calculate_whey (score , id) {
                     throw err;
                   });
                 }  
-                
-            });
-            connection.commit(function(err) {
-                if (err) { 
-                  connection.rollback(function() {
-                    throw err;
-                  });
-                }
-                console.log('Transaction Complete.');
-                connection.end();
+                connection.commit(function(err) {
+                  if (err) { 
+                    connection.rollback(function() {
+                      throw err;
+                    });
+                  }
+                  console.log('Transaction Complete.');
+                  connection.end();
+                });
             });
         });
         
