@@ -170,7 +170,6 @@ app.put('/update_calculate_whey', (req, res) => {
                                 "error_message" : error
                             })
                         }
-                        
                     });
                 }
                 res.send({
