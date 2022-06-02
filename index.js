@@ -158,11 +158,9 @@ app.put('/update_calculate_whey', (req, res) => {
             else {
                 console.log(results.length)
                 let calculate_saw = await sawfunction.calculateSaw(results)
-                let promises = []
                 for (let i = 0; i < results.length; i++) {
-                    promises.push(functions.update_calculate_whey(calculate_saw[i], results[i].id_whey_protein))
+                    await functions.update_calculate_whey(calculate_saw[i], results[i].id_whey_protein)
                 }
-                Promise.all(promises).then(results => console.log(results))
                 res.send({
                     "message": "Success",
                     // calculate_saw
