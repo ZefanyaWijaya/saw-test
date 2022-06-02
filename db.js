@@ -8,6 +8,7 @@ var con = mysql.createPool({
   port : 3306, 
   database : "spk_saw_whey_protein" ,
   connectionLimit : 50,
+  connectTimeout : 5000,
 });
 
 // con.connect(function(err) {

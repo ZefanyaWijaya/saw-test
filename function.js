@@ -410,7 +410,6 @@ function update_calculate_whey (score , id, callback){
             connection.end();
             throw err;
         }
-        
         connection.query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id], function (err, rows) {
             if (!err) {
                 console.log(rows.affectedRows);
