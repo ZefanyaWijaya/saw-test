@@ -405,28 +405,28 @@ function getCalculateWhey(parameter, callback){
 // }
 
 function update_calculate_whey (score , id, callback){
-    db.getConnection(function (err, connection) {
+    db.getConnection( function  (err, connection) {
         if (err) {
-            connection.release();
+            connection.end();
             throw err;
         }
         
         connection.query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id], function (err, rows) {
             if (!err) {
                 console.log(rows.affectedRows);
-                connection.release()
+                connection.end()
                 callback(null,rows.affectedRows)
                 
             }
             else {
                 console.log("error");
-                connection.release()
+                connection.end()
                 callback(err,null)
             }
         });
 
         connection.on('error', function (err) {
-            connection.release();
+            connection.end();
             callback(err,null)
             throw err;
         });
