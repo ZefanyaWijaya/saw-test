@@ -383,7 +383,7 @@ function getCalculateWhey(parameter, callback){
 
 
 //UPDATE CALCULATE WHEY
-async function update_calculate_whey (query , parameter) {
+async function update_calculate_whey (score , id) {
 
     // try {
         
@@ -409,7 +409,7 @@ async function update_calculate_whey (query , parameter) {
 
         // connection.release();
 
-        connection.query(query , parameter, function (err, rows) {
+        connection.query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id], function (err, rows) {
             // connection.release();
             if (!err) {
                 console.log(rows);
