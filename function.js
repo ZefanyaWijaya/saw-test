@@ -383,25 +383,54 @@ function getCalculateWhey(parameter, callback){
 
 
 //UPDATE CALCULATE WHEY
-function update_calculate_whey (score , id) {
-    db.getConnection( function (err, connection) {
+// function update_calculate_whey (score , id) {
+//     db.getConnection( function (err, connection) {
+//         if (err) {
+//             connection.release();
+//             throw err;
+//         }
+
+//         const query = util.promisify(connection.query).bind(connection);
+
+//         // const row = await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id]);
+//         query('begin')
+//         query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ? ;" , [score,id]);
+
+//         connection.release();
+//         query('commit');
+
+//         return 
+    
+//     })
+// }
+
+function update_calculate_whey (score , id, callback){
+    db.getConnection(function (err, connection) {
         if (err) {
             connection.release();
             throw err;
         }
+        
+        connection.query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id], function (err, rows) {
+            if (!err) {
+                console.log(rows.affectedRows);
+                connection.release()
+                callback(null,rows.affectedRows)
+                
+            }
+            else {
+                console.log("error");
+                connection.release()
+                callback(err,null)
+            }
+        });
 
-        const query = util.promisify(connection.query).bind(connection);
-
-        // const row = await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id]);
-        query('begin')
-        query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ? ;" , [score,id]);
-
-        connection.release();
-        query('commit');
-
-        return 
-    
-    })
+        connection.on('error', function (err) {
+            connection.release();
+            callback(err,null)
+            throw err;
+        });
+    });
 }
 
 

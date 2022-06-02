@@ -157,12 +157,29 @@ app.put('/update_calculate_whey', (req, res) => {
                 console.log(results.length)
                 let calculate_saw = await sawfunction.calculateSaw(results)
                 for (let i = 0; i < results.length; i++) {
-                    functions.update_calculate_whey(calculate_saw[i], results[i].id_whey_protein)
+                    // functions.update_calculate_whey(calculate_saw[i], results[i].id_whey_protein)
+                    functions.update_calculate_whey(calculate_saw[i], results[i].id_whey_protein,function(err, results) {
+                        try{
+                            if (err)
+                                throw err; // or return an error message, or something
+                            else
+                            res.send({
+                                "message" : "Success",
+                            }); 
+                        }catch(error) {
+                            res.send({
+                                "message" : "Failed",
+                                "error_key" : "error_internal_server",
+                                "error_message" : error
+                            })
+                        }
+                        
+                    });
                 }
-                res.send({
-                    "message": "Success",
-                    // calculate_saw
-                })
+                // res.send({
+                //     "message": "Success",
+                //     // calculate_saw
+                // })
             }
         } catch (error) {
             res.send({
