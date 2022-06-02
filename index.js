@@ -157,15 +157,15 @@ app.put('/update_calculate_whey', (req, res) => {
                 throw err
             else {
                 console.log(results.length)
-                let query = ""
                 let parameter = []
                 let calculate_saw = await sawfunction.calculateSaw(results)
                 for (let i = 0; i < results.length; i++) {
-                    query += "UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?; "
-                    parameter.push(calculate_saw[i])
-                    parameter.push(results[i].id_whey_protein)
+                    let param = []
+                    param.push(calculate_saw[i])
+                    param.push(results[i].id_whey_protein)
+                    parameter.push(param)
                 }
-                let err = await functions.update_calculate_whey(query, parameter)
+                let err = await functions.update_calculate_whey(parameter)
                 if (err){
                     return res.send({
                         "message": "Failed",
@@ -175,8 +175,7 @@ app.put('/update_calculate_whey', (req, res) => {
                 }
                 return res.send({
                     "message": "Success",
-                    "query" : query,
-                    "parameter": parameter
+                    "parameter" : parameter
                     // calculate_saw
                 })
             }

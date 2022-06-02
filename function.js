@@ -383,51 +383,52 @@ function getCalculateWhey(parameter, callback){
 
 
 //UPDATE CALCULATE WHEY
-async function update_calculate_whey (query , parameter) {
+async function update_calculate_whey (parameter) {
 
-    // try {
-        
-    //     const err, results = await new Promise((resolve, reject) => db.query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id])
-
-    //     return rows 
-        
-    // } catch (error) {
-        
-    // }
-
-
-
-    db.getConnection( async function (err, connection) {
-        if (err) {
-            connection.release();
-            throw err;
+    try {
+        for(let i of parameter){
+            await db.query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?;", i[0], i[1])
         }
+    return null
+        
+    } catch (error) {
+        console.log(error);
+        return error
+    }
 
-        // const query = util.promisify(connection.query).bind(connection);
 
-        // const row = await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id]);
 
-        // connection.release();
+    // db.getConnection( async function (err, connection) {
+    //     if (err) {
+    //         connection.release();
+    //         throw err;
+    //     }
 
-        connection.query(query , parameter, function (err, rows) {
-            // connection.release();
-            if (!err) {
-                console.log(rows);
-                connection.release()
-                return null
+    //     // const query = util.promisify(connection.query).bind(connection);
+
+    //     // const row = await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id]);
+
+    //     // connection.release();
+
+    //     connection.query(query , parameter, function (err, rows) {
+    //         // connection.release();
+    //         if (!err) {
+    //             console.log(rows);
+    //             connection.release()
+    //             return null
                 
-            }
-            else {
-                console.log("error");
-                connection.release()
-                return err
-            }
+    //         }
+    //         else {
+    //             console.log("error");
+    //             connection.release()
+    //             return err
+    //         }
 
-        });
+    //     });
 
-        return 
+    //     return 
     
-    })
+    // })
 }
 
 
