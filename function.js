@@ -394,7 +394,7 @@ function update_calculate_whey (score , id) {
 
         // const row = await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id]);
         await query('begin')
-        await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id]);
+        await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ? ;" , [score,id]);
 
         connection.release();
         await query('commit');
