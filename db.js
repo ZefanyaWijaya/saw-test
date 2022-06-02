@@ -7,7 +7,7 @@ var con = mysql.createPool({
   password: "m45t3r88",
   port : 3306, 
   database : "spk_saw_whey_protein" ,
-  connectionLimit : 10
+  connectionLimit : 50,
 });
 
 // con.connect(function(err) {
