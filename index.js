@@ -156,10 +156,8 @@ app.put('/update_calculate_whey', (req, res) => {
             else {
                 console.log(results.length)
                 let calculate_saw = await sawfunction.calculateSaw(results)
-                async () =>{
-                    for await(let i of results.length) {
-                        functions.update_calculate_whey(calculate_saw[i-1], results[i-1].id_whey_protein)
-                    }
+                for (let i = 0; i < results.length; i++) {
+                    functions.update_calculate_whey(calculate_saw[i], results[i].id_whey_protein)
                 }
                 res.send({
                     "message": "Success",
