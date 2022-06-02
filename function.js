@@ -390,11 +390,44 @@ function update_calculate_whey (score , id) {
             throw err;
         }
 
-        const query = util.promisify(connection.query).bind(connection);
-        connection.beginTransaction()
-        const row = await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id]);
-        connection.commit();
-        connection.release();
+        // const query = util.promisify(connection.query).bind(connection);
+        // connection.beginTransaction(
+        //     // const row = await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id]);
+        //     await query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id])
+        // )
+
+        connection.beginTransaction(function(err) {
+            if (err) {
+                 throw err; 
+            }
+            connection.query("UPDATE calculate_whey SET score_saw = ? WHERE id_whey_protein = ?" , [score,id], function(err, result) {
+                if (err) { 
+                  connection.rollback(function() {
+                    throw err;
+                  });
+                }  
+                connection.commit(function(err) {
+                  if (err) { 
+                    connection.rollback(function() {
+                      throw err;
+                    });
+                  }
+                  console.log('Transaction Complete.');
+                  connection.release();
+                });
+            });
+        });
+        
+        // connection.commit(
+        //     if (err) { 
+        //         connection.rollback(function() {
+        //           throw err;
+        //         });
+        //       }
+        //       console.log('Transaction Complete.');
+        //       connection.end();
+        // );
+        // connection.release();
 
         return 
     
