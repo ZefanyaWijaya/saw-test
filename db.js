@@ -9,6 +9,7 @@ var con = mysql.createPool({
   database : "spk_saw_whey_protein" ,
   connectionLimit : 50,
   connectTimeout : 5000,
+  timeout : 3000,
   multipleStatements : true,
   waitForConnections : true,
   acquireTimeout : 30000,
