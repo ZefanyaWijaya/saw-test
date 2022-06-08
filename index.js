@@ -157,7 +157,7 @@ app.put('/update_calculate_whey', (req, res) => {
                 console.log(results.length)
                 let calculate_saw = await sawfunction.calculateSaw(results)
                 let waitForFunction = await waitForUpdate(results, calculate_saw)
-                if(waitForFunction == true) {
+                if(waitForFunction == null) {
                     res.send({
                         "message": "Success",
                     })
@@ -168,7 +168,6 @@ app.put('/update_calculate_whey', (req, res) => {
                         "error_message": error
                     })
                 }
-               
             }
         } catch (error) {
             res.send({
@@ -185,12 +184,12 @@ async function waitForUpdate(results,calculate_saw){
         functions.update_calculate_whey(calculate_saw[i], results[i].id_whey_protein,function(err, results) {
             try{
                 if (err)
-                    return false
+                    throw err
                 else {
-                    return true
+                    return null
                 }
             }catch(error) {
-                return false
+                return error
             }
         });
     }
