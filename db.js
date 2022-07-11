@@ -2,11 +2,11 @@ var mysql = require('mysql');
 const Connection = require('mysql/lib/Connection');
 
 var con = mysql.createPool({
-  host: "dbwisp.c5zujjjdmbwx.us-west-2.rds.amazonaws.com",
-  user: "jleopold8",
-  password: "m45t3r88",
+  host: "spk-saw-whey-protein.cy4zxvpi8yfo.us-west-1.rds.amazonaws.com",
+  user: "admin",
+  password: "pusing123",
   port : 3306, 
-  database : "spk_saw_whey_protein" ,
+  database : "spk-saw-whey-protein" ,
   connectionLimit : 100,
   connectTimeout : 5000,
   timeout : 3000,
@@ -14,6 +14,20 @@ var con = mysql.createPool({
   waitForConnections : true,
   acquireTimeout : 30000,
 });
+
+// var con = mysql.createPool({
+//   host: "dbwisp.c5zujjjdmbwx.us-west-2.rds.amazonaws.com",
+//   user: "jleopold8",
+//   password: "m45t3r88",
+//   port : 3306, 
+//   database : "spk_saw_whey_protein" ,
+//   connectionLimit : 100,
+//   connectTimeout : 5000,
+//   timeout : 3000,
+//   multipleStatements : true,
+//   waitForConnections : true,
+//   acquireTimeout : 30000,
+// });
 
 // var con = mysql.createPool({
 //   host: "localhost",
