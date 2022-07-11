@@ -6,7 +6,7 @@ var con = mysql.createPool({
   user: "admin",
   password: "pusing123",
   port : 3306, 
-  database : "spk-saw-whey-protein" ,
+  database : "spk_saw_whey_protein" ,
   connectionLimit : 100,
   connectTimeout : 5000,
   timeout : 3000,
